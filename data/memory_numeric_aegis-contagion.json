@@ -1,0 +1,509 @@
+{
+"structure": {
+"authenticates": {
+"alive": 39.861999999999995,
+"dead": 124.13799999999998
+},
+"contains_secret": {
+"alive": 35.038000000000004,
+"dead": 152.96199999999996
+},
+"can_invoke": {
+"alive": 6.67,
+"dead": 13.33
+},
+"can_write": {
+"alive": 6.154,
+"dead": 31.845999999999997
+},
+"can_read": {
+"alive": 10.918,
+"dead": 75.08199999999998
+},
+"push_access": {
+"alive": 22.54,
+"dead": 63.459999999999994
+},
+"can_deploy": {
+"alive": 5.895999999999999,
+"dead": 38.104
+},
+"trusts": {
+"alive": 1.882,
+"dead": 18.118
+},
+"can_assume": {
+"alive": 14.866,
+"dead": 47.13400000000001
+}
+},
+"edges": {
+"key-openai-content|authenticates|wl-content-agent": {
+"alive": 8.16,
+"dead": 3.8399999999999994
+},
+"key-gh-release|authenticates|wl-release": {
+"alive": 11.267999999999999,
+"dead": 24.732
+},
+"wl-package-publish|contains_secret|key-npm-publish": {
+"alive": 3.42,
+"dead": 32.58
+},
+"key-snowflake-etl|authenticates|wl-warehouse": {
+"alive": 2.412,
+"dead": 21.588
+},
+"key-snowflake-bi|authenticates|wl-bi": {
+"alive": 1.8359999999999999,
+"dead": 10.164
+},
+"key-docker-release|authenticates|wl-package-publish": {
+"alive": 4.752000000000001,
+"dead": 31.248
+},
+"key-jenkins|authenticates|wl-jenkins": {
+"alive": 2.652,
+"dead": 21.348
+},
+"key-openai-content|can_invoke|ai-openai": {
+"alive": 9.492,
+"dead": 2.5079999999999996
+},
+"wl-content-agent|contains_secret|key-gh-release": {
+"alive": 6.48,
+"dead": 5.52
+},
+"wl-content-agent|can_write|repo-ai": {
+"alive": 2.52,
+"dead": 9.48
+},
+"key-openai-content|can_read|repo-ai": {
+"alive": 3.084,
+"dead": 8.916
+},
+"wl-content-agent|can_invoke|ai-openai": {
+"alive": 0.8879999999999999,
+"dead": 11.112
+},
+"key-gh-release|push_access|repo-web": {
+"alive": 12.96,
+"dead": 23.04
+},
+"key-gh-release|push_access|repo-infra": {
+"alive": 13.044,
+"dead": 22.956
+},
+"repo-web|can_deploy|pipe-release": {
+"alive": 4.692,
+"dead": 19.308
+},
+"pipe-release|contains_secret|key-npm-publish": {
+"alive": 0.348,
+"dead": 23.652
+},
+"repo-npm|can_deploy|pipe-npm": {
+"alive": 3.96,
+"dead": 32.04
+},
+"key-npm-publish|push_access|repo-npm": {
+"alive": 11.472,
+"dead": 36.528000000000006
+},
+"wl-warehouse|can_write|ds-warehouse": {
+"alive": 0.468,
+"dead": 23.532
+},
+"wl-warehouse|can_read|ds-warehouse": {
+"alive": 0.792,
+"dead": 23.208
+},
+"wl-bi|can_read|ds-warehouse": {
+"alive": 1.1280000000000001,
+"dead": 10.872
+},
+"key-snowflake-etl|trusts|role-aws-data": {
+"alive": 0.8160000000000001,
+"dead": 23.183999999999997
+},
+"key-jenkins|can_deploy|pipe-jenkins": {
+"alive": 1.14,
+"dead": 22.86
+},
+"key-docker-release|push_access|repo-infra": {
+"alive": 5.604,
+"dead": 42.396
+},
+"wl-release|contains_secret|key-jenkins": {
+"alive": 4.668,
+"dead": 31.332
+},
+"wl-release|contains_secret|key-snowflake-etl": {
+"alive": 4.032,
+"dead": 31.968
+},
+"wl-release|contains_secret|key-docker-release": {
+"alive": 5.4479999999999995,
+"dead": 18.552
+},
+"wl-content-agent|contains_secret|key-snowflake-bi": {
+"alive": 4.668,
+"dead": 7.332
+},
+"key-npm-publish|authenticates|wl-package-publish": {
+"alive": 7.608,
+"dead": 28.392
+},
+"role-aws-data|can_read|ds-customer-s3": {
+"alive": 0.20400000000000001,
+"dead": 11.796
+},
+"pipe-jenkins|can_assume|role-k8s-admin": {
+"alive": 0.156,
+"dead": 11.844
+},
+"key-openai-eval|authenticates|wl-eval-runner": {
+"alive": 0.8759999999999999,
+"dead": 11.124
+},
+"key-vault-unseal|authenticates|wl-vault": {
+"alive": 2.208,
+"dead": 21.791999999999998
+},
+"key-stripe-live|authenticates|wl-payouts": {
+"alive": 1.3920000000000001,
+"dead": 10.608
+},
+"key-aws-deploy|authenticates|wl-deploy": {
+"alive": 8.724,
+"dead": 15.276
+},
+"key-aws-backup|authenticates|wl-backup": {
+"alive": 6.612,
+"dead": 17.388
+},
+"key-azure-etl|authenticates|wl-finance": {
+"alive": 7.524,
+"dead": 4.476
+},
+"wl-deploy|contains_secret|key-datadog": {
+"alive": 6.696,
+"dead": 17.304000000000002
+},
+"key-openai-eval|can_invoke|ai-openai": {
+"alive": 0.96,
+"dead": 11.040000000000001
+},
+"role-k8s-admin|can_read|ds-warehouse": {
+"alive": 3.612,
+"dead": 20.387999999999998
+},
+"role-aws-prod|contains_secret|key-vault-unseal": {
+"alive": 3.2399999999999998,
+"dead": 20.759999999999998
+},
+"wl-finance|can_write|ds-finance": {
+"alive": 4.5600000000000005,
+"dead": 7.4399999999999995
+},
+"key-azure-etl|can_assume|role-azure-contrib": {
+"alive": 5.784,
+"dead": 6.216
+},
+"role-azure-contrib|can_read|ds-finance": {
+"alive": 0.9119999999999999,
+"dead": 11.088000000000001
+},
+"role-azure-contrib|contains_secret|key-stripe-live": {
+"alive": 2.184,
+"dead": 9.816
+},
+"key-stripe-live|can_assume|role-stripe-admin": {
+"alive": 0.972,
+"dead": 11.028
+},
+"key-aws-deploy|can_assume|role-aws-prod": {
+"alive": 7.0680000000000005,
+"dead": 16.932000000000002
+},
+"wl-deploy|can_assume|role-k8s-admin": {
+"alive": 4.788,
+"dead": 19.212
+},
+"wl-payouts|can_read|ds-finance": {
+"alive": 0.312,
+"dead": 11.687999999999999
+},
+"wl-backup|can_write|ds-customer-s3": {
+"alive": 2.76,
+"dead": 21.240000000000002
+},
+"wl-finance|contains_secret|key-aws-backup": {
+"alive": 4.104,
+"dead": 7.895999999999999
+},
+"wl-backup|contains_secret|key-openai-eval": {
+"alive": 1.368,
+"dead": 10.632
+},
+"wl-backup|contains_secret|key-aws-deploy": {
+"alive": 1.6440000000000001,
+"dead": 10.356
+},
+"key-okta-helpdesk|authenticates|wl-helpdesk": {
+"alive": 2.3520000000000003,
+"dead": 9.648
+},
+"key-okta-provision|authenticates|wl-admin": {
+"alive": 6.9719999999999995,
+"dead": 5.0280000000000005
+},
+"key-okta-helpdesk|authenticates|idp-okta": {
+"alive": 2.3760000000000003,
+"dead": 9.624
+},
+"key-okta-provision|can_assume|role-okta-super": {
+"alive": 6.803999999999999,
+"dead": 5.196000000000001
+},
+"role-okta-super|trusts|idp-okta": {
+"alive": 0.948,
+"dead": 11.052
+},
+"role-okta-super|can_read|ds-logs": {
+"alive": 3.4319999999999995,
+"dead": 8.568
+},
+"wl-admin|contains_secret|key-okta-helpdesk": {
+"alive": 4.476,
+"dead": 7.524
+},
+"ds-logs|can_read|ds-warehouse": {
+"alive": 0.924,
+"dead": 23.076
+},
+"wl-package-publish|contains_secret|key-docker-release": {
+"alive": 6.252,
+"dead": 17.747999999999998
+},
+"role-aws-prod|can_read|ds-customer-s3": {
+"alive": 2.916,
+"dead": 9.084
+},
+"role-aws-prod|can_assume|role-k8s-admin": {
+"alive": 0.6960000000000001,
+"dead": 11.303999999999998
+},
+"key-vault-unseal|can_assume|role-vault-root": {
+"alive": 1.464,
+"dead": 10.536
+},
+"role-aws-prod|can_read|ds-logs": {
+"alive": 2.52,
+"dead": 9.48
+},
+"wl-deploy|contains_secret|key-aws-backup": {
+"alive": 5.5920000000000005,
+"dead": 6.408
+},
+"wl-backup|contains_secret|key-datadog": {
+"alive": 0.168,
+"dead": 11.832
+},
+"wl-backup|contains_secret|key-docker-release": {
+"alive": 1.7519999999999998,
+"dead": 10.248
+},
+"wl-vault|contains_secret|key-gh-release": {
+"alive": 0.9119999999999999,
+"dead": 11.088000000000001
+},
+"wl-vault|contains_secret|key-npm-publish": {
+"alive": 0.624,
+"dead": 11.376
+}
+},
+"action_stats": {
+"revoke_sessions": {
+"picks": 13,
+"coverage": 5.5851,
+"disruption": 0.11499999999999998
+},
+"remove_oauth": {
+"picks": 3,
+"coverage": 1.2054,
+"disruption": 0.046
+},
+"reduce_scope": {
+"picks": 1,
+"coverage": 0.1906,
+"disruption": 0.035
+},
+"deny_asn": {
+"picks": 3,
+"coverage": 1.5308000000000002,
+"disruption": 0.008
+},
+"step_up_mfa": {
+"picks": 1,
+"coverage": 0.1174,
+"disruption": 0.018
+}
+},
+"directives": [
+{
+"kind": "prefer_action",
+"target": "revoke_sessions",
+"text": "Analyst campaign-runner: prefer revoke sessions before rotation in Meridian Health.",
+"value": 0.6,
+"incident": "INC-1066",
+"ts": "2026-11-07T09:33:37.059464+00:00"
+},
+{
+"kind": "prefer_action",
+"target": "revoke_sessions",
+"text": "Analyst campaign-runner: prefer revoke sessions before rotation in Meridian Health.",
+"value": 0.6,
+"incident": "INC-1067",
+"ts": "2026-11-07T09:33:37.373036+00:00"
+},
+{
+"kind": "prefer_action",
+"target": "revoke_sessions",
+"text": "Analyst campaign-runner: prefer revoke sessions before rotation in Northwind Payments.",
+"value": 0.6,
+"incident": "INC-1068",
+"ts": "2026-11-07T09:33:37.697587+00:00"
+},
+{
+"kind": "prefer_action",
+"target": "revoke_sessions",
+"text": "Analyst campaign-runner: prefer revoke sessions before rotation in Northwind Payments.",
+"value": 0.6,
+"incident": "INC-1069",
+"ts": "2026-11-07T09:33:38.013938+00:00"
+},
+{
+"kind": "prefer_action",
+"target": "revoke_sessions",
+"text": "Analyst campaign-runner: prefer revoke sessions before rotation in Orbital Logistics.",
+"value": 0.6,
+"incident": "INC-1070",
+"ts": "2026-11-07T09:33:38.354317+00:00"
+}
+],
+"episodes": [
+{
+"incident": "INC-1066",
+"estate": "meridian",
+"p0": "key-openai-content",
+"actions": [
+"revoke_sessions",
+"revoke_sessions",
+"remove_oauth"
+],
+"targets": [
+"role-k8s-admin",
+"key-snowflake-bi",
+"key-gh-release"
+],
+"coverage": 0.8278,
+"disruption": 0.046,
+"ts": "2026-11-07T09:33:37.059177+00:00"
+},
+{
+"incident": "INC-1067",
+"estate": "meridian",
+"p0": "key-gh-release",
+"actions": [
+"revoke_sessions",
+"revoke_sessions",
+"remove_oauth",
+"reduce_scope"
+],
+"targets": [
+"role-k8s-admin",
+"key-snowflake-etl",
+"key-gh-release",
+"role-k8s-admin"
+],
+"coverage": 0.9641,
+"disruption": 0.061,
+"ts": "2026-11-07T09:33:37.372687+00:00"
+},
+{
+"incident": "INC-1068",
+"estate": "northwind",
+"p0": "key-azure-etl",
+"actions": [
+"deny_asn",
+"revoke_sessions",
+"revoke_sessions",
+"revoke_sessions",
+"revoke_sessions"
+],
+"targets": [
+"key-azure-etl",
+"key-azure-etl",
+"key-aws-deploy",
+"role-aws-prod",
+"role-azure-contrib"
+],
+"coverage": 0.795,
+"disruption": 0.036,
+"ts": "2026-11-07T09:33:37.697407+00:00"
+},
+{
+"incident": "INC-1069",
+"estate": "northwind",
+"p0": "key-okta-provision",
+"actions": [
+"deny_asn",
+"revoke_sessions",
+"revoke_sessions",
+"remove_oauth"
+],
+"targets": [
+"key-okta-provision",
+"role-okta-super",
+"key-okta-provision",
+"key-okta-helpdesk"
+],
+"coverage": 0.996,
+"disruption": 0.032,
+"ts": "2026-11-07T09:33:38.013741+00:00"
+},
+{
+"incident": "INC-1070",
+"estate": "orbital",
+"p0": "key-aws-deploy",
+"actions": [
+"deny_asn",
+"revoke_sessions",
+"revoke_sessions",
+"revoke_sessions",
+"step_up_mfa"
+],
+"targets": [
+"key-aws-deploy",
+"key-aws-deploy",
+"role-aws-prod",
+"role-k8s-admin",
+"wl-deploy"
+],
+"coverage": 0.9117,
+"disruption": 0.047,
+"ts": "2026-11-07T09:33:38.354101+00:00"
+},
+{
+"incident": "INC-1071",
+"estate": "orbital",
+"p0": "key-npm-publish",
+"actions": [],
+"targets": [],
+"coverage": 0.0,
+"disruption": 0,
+"ts": "2026-11-07T09:33:38.637691+00:00"
+}
+]
+}

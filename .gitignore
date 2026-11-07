@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.env
+.venv/
+.DS_Store
+data/server.log
+data/server.pid
+data/gnn_test.*
+docs/_review/
+docs/_smoke.*
+docs/_edge.log

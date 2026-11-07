@@ -1,0 +1,116 @@
+{
+ "episodes": 6,
+ "validEpisodes": 5,
+ "memoryEpisodes": 4,
+ "excludedEpisodes": 2,
+ "coldMean": 0.907,
+ "warmMean": 0.942,
+ "naiveMean": 0.173,
+ "gain": 0.035,
+ "series": [
+  {
+   "index": 1,
+   "scenario": "Leaked AI key",
+   "estate": "meridian",
+   "warmCoverage": 0.8457,
+   "coldCoverage": 0.723,
+   "naiveCoverage": 0.606,
+   "pathsTotal": 19,
+   "warmDisruption": 0.046,
+   "recalled": 0,
+   "actions": [
+    "Revoke active sessions",
+    "Revoke active sessions",
+    "Remove OAuth grant"
+   ],
+   "memoryMode": "local"
+  },
+  {
+   "index": 2,
+   "scenario": "CI secret exposure",
+   "estate": "meridian",
+   "warmCoverage": 0.9713,
+   "coldCoverage": 0.8291,
+   "naiveCoverage": 0.6658,
+   "pathsTotal": 16,
+   "warmDisruption": 0.061,
+   "recalled": 5,
+   "actions": [
+    "Revoke active sessions",
+    "Revoke active sessions",
+    "Remove OAuth grant",
+    "Reduce scope"
+   ],
+   "memoryMode": "local"
+  },
+  {
+   "index": 3,
+   "scenario": "OAuth grant abuse",
+   "estate": "northwind",
+   "warmCoverage": 0.8721,
+   "coldCoverage": 0.8721,
+   "naiveCoverage": 0.0,
+   "pathsTotal": 15,
+   "warmDisruption": 0.036,
+   "recalled": 6,
+   "actions": [
+    "Deny source ASN",
+    "Revoke active sessions",
+    "Revoke active sessions",
+    "Revoke active sessions",
+    "Revoke active sessions"
+   ],
+   "memoryMode": "local"
+  },
+  {
+   "index": 4,
+   "scenario": "Identity admin token",
+   "estate": "northwind",
+   "warmCoverage": 0.996,
+   "coldCoverage": 0.996,
+   "naiveCoverage": 0.0,
+   "pathsTotal": 5,
+   "warmDisruption": 0.032,
+   "recalled": 6,
+   "actions": [
+    "Deny source ASN",
+    "Revoke active sessions",
+    "Revoke active sessions",
+    "Remove OAuth grant"
+   ],
+   "memoryMode": "local"
+  },
+  {
+   "index": 5,
+   "scenario": "Deploy role compromise",
+   "estate": "orbital",
+   "warmCoverage": 0.9283,
+   "coldCoverage": 0.931,
+   "naiveCoverage": 0.0254,
+   "pathsTotal": 20,
+   "warmDisruption": 0.047,
+   "recalled": 6,
+   "actions": [
+    "Deny source ASN",
+    "Revoke active sessions",
+    "Revoke active sessions",
+    "Revoke active sessions",
+    "Enforce step-up MFA"
+   ],
+   "memoryMode": "local"
+  },
+  {
+   "index": 6,
+   "scenario": "Package token theft",
+   "estate": "orbital",
+   "warmCoverage": 0.0,
+   "coldCoverage": 0.0,
+   "naiveCoverage": 0.0,
+   "pathsTotal": 0,
+   "warmDisruption": 0,
+   "recalled": 6,
+   "actions": [],
+   "memoryMode": "local"
+  }
+ ]
+}

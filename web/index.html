@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AEGIS // CONTAGION — identity outbreak containment</title>
+<meta name="description" content="Simulation-driven credential containment. The scanner finds a key. AEGIS finds the outbreak, prices it, and cuts it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<div id="boot" class="boot">
+  <div class="boot-inner">
+    <div class="boot-mark">AEGIS<span>//</span>CONTAGION</div>
+    <div class="boot-sub">SIMULATION-DRIVEN CREDENTIAL CONTAINMENT · BUILD 2026.11.07</div>
+    <pre id="bootLog" class="boot-log"></pre>
+    <button id="bootEnter" class="btn btn-primary boot-enter" disabled>ENTER CONSOLE</button>
+    <div class="boot-foot">SYNTHETIC ESTATE · ALGORITHMS REAL · TOPOLOGY ILLUSTRATIVE</div>
+  </div>
+</div>
+
+<div id="app" class="app is-booting">
+  <div class="grain" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">AEGIS<span>//</span></div>
+      <div class="brand-word">CONTAGION</div>
+      <div class="brand-ver">v1.0<span>·</span>hindsight</div>
+    </div>
+    <div class="top-center">
+      <label class="sel-wrap">
+        <span class="micro">ESTATE</span>
+        <select id="estateSelect" class="sel"></select>
+      </label>
+      <div class="top-readout">
+        <span class="micro">MODEL</span>
+        <b id="modelReadout">—</b>
+      </div>
+      <div class="top-readout">
+        <span class="micro">MEMORY</span>
+        <b id="memReadout">—</b>
+      </div>
+    </div>
+    <div class="top-right">
+      <button id="memoryToggle" class="toggle on" title="Toggle Hindsight memory (M)">
+        <span class="toggle-dot"></span>
+        <span class="toggle-label">MEMORY ON</span>
+      </button>
+      <button id="paletteBtn" class="kbd-btn" title="Command palette">⌘K</button>
+      <div class="clock" id="clock">--:--:--<span>Z</span></div>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Console sections">
+    <button class="tab active" data-tab="outbreak"><i>01</i>OUTBREAK</button>
+    <button class="tab" data-tab="plan"><i>02</i>PLAN</button>
+    <button class="tab" data-tab="memory"><i>03</i>MEMORY</button>
+    <button class="tab" data-tab="model"><i>04</i>MODEL</button>
+    <button class="tab" data-tab="eval"><i>05</i>EVAL</button>
+    <div class="tabs-right">
+      <span class="ticker" id="ticker">AWAITING SIGNAL</span>
+      <span class="live"><span class="live-dot"></span>LOCAL</span>
+    </div>
+  </nav>
+
+  <div class="shell">
+    <aside class="rail rail-left">
+      <div class="rail-head">
+        <span class="micro">SIGNAL QUEUE</span>
+        <span class="rail-count" id="scenarioCount">06</span>
+      </div>
+      <div id="scenarioList" class="scenario-list"></div>
+
+      <div class="rail-head mt">
+        <span class="micro">INCIDENTS</span>
+        <span class="rail-count" id="incidentCount">00</span>
+      </div>
+      <div id="incidentList" class="incident-list">
+        <div class="empty-line">no outbreak run this session</div>
+      </div>
+
+      <div class="rail-head mt"><span class="micro">RUN CONFIG</span></div>
+      <div class="run-config">
+        <label><span>POLICY</span>
+          <select id="policySelect" class="sel sel-sm">
+            <option value="balanced">balanced attacker</option>
+            <option value="loud">loud / fast</option>
+            <option value="quiet">quiet / stealthy</option>
+          </select>
+        </label>
+        <label><span>MONTE CARLO</span>
+          <select id="trialsSelect" class="sel sel-sm">
+            <option value="1200">1,200 outbreaks</option>
+            <option value="2600" selected>2,600 outbreaks</option>
+            <option value="4200">4,200 outbreaks</option>
+          </select>
+        </label>
+        <label><span>HORIZON</span>
+          <select id="horizonSelect" class="sel sel-sm">
+            <option value="60">60 min</option>
+            <option value="90" selected>90 min</option>
+            <option value="120">120 min</option>
+          </select>
+        </label>
+      </div>
+      <div class="rail-note" id="memoryModeNote">Hindsight: local mirror · cloud when configured</div>
+      <div class="rail-foot">
+        <span class="micro">PGP</span>
+        <span class="mono-dim">synthetic estate · read-only</span>
+      </div>
+    </aside>
+
+    <main class="stage">
+      <!-- ============================================================ OUTBREAK -->
+      <section class="tab-panel active" id="tab-outbreak">
+        <div class="stage-grid">
+          <div class="graph-wrap" id="graphWrap">
+            <canvas id="graph"></canvas>
+            <div class="graph-scan"></div>
+            <div class="graph-corner tl"></div><div class="graph-corner tr"></div>
+            <div class="graph-corner bl"></div><div class="graph-corner br"></div>
+
+            <div class="graph-hud top-left">
+              <span class="micro">IDENTITY LINEAGE GRAPH</span>
+              <b id="graphTitle">MERIDIAN HEALTH · 80 NODES · 143 EDGES</b>
+            </div>
+            <div class="graph-hud top-right">
+              <div><span class="dot red"></span>PATIENT ZERO</div>
+              <div><span class="dot amber"></span>REACHED</div>
+              <div><span class="dot bone"></span>CRITICAL ASSET</div>
+              <div><span class="dot cyan"></span>RECALLED</div>
+            </div>
+            <div class="graph-tools">
+              <button class="icon-btn" id="orbitBtn" title="Toggle auto-orbit">◉</button>
+              <button class="icon-btn" id="resetViewBtn" title="Reset camera">⌖</button>
+              <button class="icon-btn" id="fitBtn" title="Fit graph">⤢</button>
+            </div>
+            <div class="graph-tip" id="graphTip"></div>
+
+            <div class="timeline">
+              <button class="play-btn" id="playBtn" title="Replay (Space)">▶</button>
+              <div class="timeline-body">
+                <div class="timeline-meta">
+                  <span class="micro">OUTBREAK CLOCK</span>
+                  <b id="clockReadout">T+00:00</b>
+                  <span id="phaseLabel" class="phase-label">AWAITING PATIENT ZERO</span>
+                </div>
+                <input type="range" id="scrub" min="0" max="90" value="0" step="0.5" aria-label="Outbreak timeline">
+                <div class="timeline-ticks"><span>0m</span><span>30m</span><span>60m</span><span>90m</span></div>
+              </div>
+              <div class="timeline-count">
+                <span class="micro">REACHED</span>
+                <b id="reachedCount">0</b>
+              </div>
+            </div>
+          </div>
+
+          <aside class="rail rail-right">
+            <div class="rail-head"><span class="micro">OUTBREAK FORECAST</span><span class="badge" id="beliefBadge">COLD</span></div>
+            <div class="hero-kpi">
+              <div class="hero-number" id="kpiR0">—</div>
+              <div class="hero-label">R₀ <span>secondary credentials per case</span></div>
+              <div class="hero-spark"><canvas id="curveSpark" height="44"></canvas></div>
+            </div>
+            <div class="kpi-grid">
+              <div class="kpi"><span class="micro">TIME TO CROWN JEWEL</span><b id="kpiTtc">—</b><i>median / min</i></div>
+              <div class="kpi"><span class="micro">REACH PROBABILITY</span><b id="kpiReach">—</b><i>within horizon</i></div>
+              <div class="kpi"><span class="micro">SIMULATED LOSS · P50</span><b id="kpiLoss">—</b><i id="lossRange">p90 —</i></div>
+              <div class="kpi"><span class="micro">CREDENTIAL SPREAD</span><b id="kpiSpread">—</b><i>mean reached</i></div>
+            </div>
+
+            <div class="rail-head"><span class="micro">DOMINANT PATHS</span><span class="micro count" id="pathCount">00</span></div>
+            <div class="path-list" id="pathList">
+              <div class="empty-line">run a scenario to simulate the outbreak</div>
+            </div>
+
+            <div class="rail-head"><span class="micro">CONTAINMENT PORTFOLIO</span><span class="micro count" id="portfolioMeta">—</span></div>
+            <div class="portfolio" id="planList">
+              <div class="empty-line">no plan yet</div>
+            </div>
+            <div class="plan-actions">
+              <button class="btn btn-primary" id="executeBtn" disabled>EXECUTE PLAN <kbd>E</kbd></button>
+              <button class="btn btn-ghost" id="toggleDetailBtn">EVIDENCE</button>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ================================================================ PLAN -->
+      <section class="tab-panel" id="tab-plan">
+        <div class="panel-scroll">
+          <div class="section-head">
+            <div>
+              <div class="micro">SECTION 02</div>
+              <h1>Ring vaccination</h1>
+              <p>A portfolio under a disruption budget, not a ranked list. Cheap cuts first; rotations last; every row expands into the paths it breaks.</p>
+            </div>
+            <div class="head-actions">
+              <button class="btn btn-ghost" id="planExecuteBtn" disabled>EXECUTE CHOREOGRAPHY</button>
+              <div class="seg" id="budgetSeg">
+                <button data-budget="0.06">6%</button>
+                <button data-budget="0.08" class="on">8%</button>
+                <button data-budget="0.12">12%</button>
+              </div>
+            </div>
+          </div>
+          <div class="plan-grid">
+            <div class="card card-wide">
+              <div class="card-head"><span class="micro">CHOSEN INTERVENTIONS</span><span class="micro" id="planFormula">max coverage subject to disruption</span></div>
+              <div id="planDetail" class="plan-detail"><div class="empty-line">no plan yet</div></div>
+            </div>
+            <div class="card">
+              <div class="card-head"><span class="micro">COVERAGE FRONTIER</span><span class="micro">coverage / disruption</span></div>
+              <canvas id="frontierChart" height="220"></canvas>
+              <div class="card-foot" id="frontierFoot">—</div>
+            </div>
+            <div class="card">
+              <div class="card-head"><span class="micro">AGAINST THE OBVIOUS BASELINE</span><span class="micro">same paths · same k</span></div>
+              <div id="baselineBars" class="bars"><div class="empty-line">—</div></div>
+              <div class="card-foot">all three bars scored on the same held-out reservoir</div>
+            </div>
+            <div class="card card-wide">
+              <div class="card-head"><span class="micro">EXECUTION CHOREOGRAPHY</span><span class="micro">dual-key overlap · health checks · rollback</span></div>
+              <div id="choreo" class="choreo"><div class="empty-line">execute the plan to simulate the runbook</div></div>
+            </div>
+            <div class="card">
+              <div class="card-head"><span class="micro">DIRECTIVES FROM MEMORY</span><span class="micro">applied constraints</span></div>
+              <div id="directiveList" class="directive-list"><div class="empty-line">none yet</div></div>
+            </div>
+            <div class="card">
+              <div class="card-head"><span class="micro">EVIDENCE TRACE</span><span class="micro">compute log</span></div>
+              <div id="traceList" class="trace-list"><div class="empty-line">—</div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== MEMORY -->
+      <section class="tab-panel" id="tab-memory">
+        <div class="panel-scroll">
+          <div class="section-head">
+            <div>
+              <div class="micro">SECTION 03</div>
+              <h1>What the agent remembers</h1>
+              <p>Hindsight stores the episode, the facts and the analyst's dissent. Structure posteriors turn them into priors. A learned reranker decides what is worth recalling.</p>
+            </div>
+            <div class="head-actions">
+              <div class="mem-status"><span id="memBackend">LOCAL HINDSIGHT</span><b id="memCount">0</b><i>records</i></div>
+              <button class="btn btn-danger-ghost" id="memResetBtn">RESET MEMORY</button>
+            </div>
+          </div>
+
+          <div class="mem-grid">
+            <div class="card mem-constellation">
+              <div class="card-head"><span class="micro">MEMORY CONSTELLATION</span><span class="micro" id="memGraphMeta">—</span></div>
+              <canvas id="memCanvas"></canvas>
+              <div class="mem-legend">
+                <span><i class="sw episode"></i>EPISODE</span>
+                <span><i class="sw fact"></i>FACT</span>
+                <span><i class="sw directive"></i>DIRECTIVE</span>
+              </div>
+            </div>
+            <div class="card mem-recall">
+              <div class="card-head"><span class="micro">RECALL</span><span class="micro">4 channels → RRF → reranker</span></div>
+              <div class="mem-query">
+                <input id="memQuery" type="text" placeholder="ask the memory: which cut vertex broke the release chain?" value="which cut vertex broke the release chain?">
+                <button class="btn btn-sm" id="memSearch">RECALL</button>
+              </div>
+              <div id="memResults" class="mem-results"><div class="empty-line">no recall issued</div></div>
+            </div>
+            <div class="card mem-diff">
+              <div class="card-head"><span class="micro">WHAT MEMORY CHANGED</span><span class="micro" id="memDelta">—</span></div>
+              <div id="memDiff" class="mem-diff-body"><div class="empty-line">retain an episode to see the delta</div></div>
+            </div>
+            <div class="card mem-curve">
+              <div class="card-head"><span class="micro">LEARNING CURVE</span><span class="micro">coverage@5 · warm vs cold</span></div>
+              <canvas id="learningChart" height="200"></canvas>
+              <div class="card-foot" id="learningFoot">run the replay to populate</div>
+            </div>
+            <div class="card mem-directives">
+              <div class="card-head"><span class="micro">PROCEDURAL MEMORY</span><span class="micro">analyst directives</span></div>
+              <div id="directivesFull" class="directive-list"><div class="empty-line">none yet</div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================================== MODEL -->
+      <section class="tab-panel" id="tab-model">
+        <div class="panel-scroll">
+          <div class="section-head">
+            <div>
+              <div class="micro">SECTION 04</div>
+              <h1>Models built here</h1>
+              <p>No pretrained weights, no inference API. A relation-aware GraphSAGE learns infectivity from simulated outbreaks; a decoder-only transformer drafts the memo. The numbers come from the simulator, always.</p>
+            </div>
+            <div class="head-actions"><div class="chip-row" id="modelChips"></div></div>
+          </div>
+
+          <div class="model-grid">
+            <div class="card model-arch">
+              <div class="card-head"><span class="micro">CONTAGION-GNN</span><span class="micro">2 × GraphSAGE · 6 relation groups</span></div>
+              <div class="arch" id="archDiagram"></div>
+              <div class="arch-foot" id="archFoot">—</div>
+            </div>
+            <div class="card model-metrics">
+              <div class="card-head"><span class="micro">HELDOUT PERFORMANCE</span><span class="micro">unseen estate</span></div>
+              <div class="metric-big">
+                <div><span class="micro">NODE AP</span><b id="gnnAp">—</b></div>
+                <div><span class="micro">EDGE AP</span><b id="gnnEdgeAp">—</b></div>
+                <div><span class="micro">ECE</span><b id="gnnEce">—</b></div>
+                <div><span class="micro">BRIER</span><b id="gnnBrier">—</b></div>
+              </div>
+              <div class="metric-note" id="gnnNote">—</div>
+            </div>
+            <div class="card">
+              <div class="card-head"><span class="micro">TRAINING LOSS</span><span class="micro">BCE · node + edge head</span></div>
+              <canvas id="lossChart" height="180"></canvas>
+            </div>
+            <div class="card">
+              <div class="card-head"><span class="micro">CALIBRATION</span><span class="micro">predicted vs observed</span></div>
+              <canvas id="calChart" height="180"></canvas>
+            </div>
+            <div class="card model-lm">
+              <div class="card-head"><span class="micro">CONTAGION-LM</span><span class="micro">from scratch · numpy</span></div>
+              <div class="lm-stats" id="lmStats"></div>
+              <div class="lm-draft-label"><span class="micro">RAW DRAFT</span><span class="micro warn">NEVER THE SOURCE OF A NUMBER</span></div>
+              <div class="lm-draft" id="lmDraft">—</div>
+              <div class="lm-draft-label"><span class="micro">NUMERIC VALIDATOR</span><span class="micro" id="validatorVerdict">—</span></div>
+              <div id="validatorList" class="validator-list"><div class="empty-line">run an outbreak</div></div>
+            </div>
+            <div class="card model-design">
+              <div class="card-head"><span class="micro">SYSTEM DESIGN</span><span class="micro">read-only · human approval</span></div>
+              <div id="designList" class="design-list"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================ EVAL -->
+      <section class="tab-panel" id="tab-eval">
+        <div class="panel-scroll">
+          <div class="section-head">
+            <div>
+              <div class="micro">SECTION 05</div>
+              <h1>Does memory actually help?</h1>
+              <p>Sequential replay on six scripted incidents. Each incident builds a cold plan and a warm plan, then scores both on the same held-out reservoir neither planner saw. Same optimiser, same budget; the only difference is memory.</p>
+            </div>
+            <div class="head-actions">
+              <button class="btn btn-primary" id="runCampaign">REPLAY 6 INCIDENTS</button>
+            </div>
+          </div>
+
+          <div class="eval-grid">
+            <div class="card eval-hero">
+              <div class="card-head"><span class="micro">MEMORY LIFT</span><span class="micro" id="evalMeta">—</span></div>
+              <div class="eval-big" id="evalBig">—</div>
+              <div class="eval-bars" id="evalBars"><div class="empty-line">run the replay</div></div>
+            </div>
+            <div class="card eval-chart">
+              <div class="card-head"><span class="micro">PER-EPISODE COVERAGE</span><span class="micro">coverage@5</span></div>
+              <canvas id="evalChart" height="210"></canvas>
+            </div>
+            <div class="card card-wide">
+              <div class="card-head"><span class="micro">EPISODE LEDGER</span><span class="micro">warm − cold</span></div>
+              <div id="evalTable" class="eval-table"><div class="empty-line">no replay yet</div></div>
+            </div>
+            <div class="card">
+              <div class="card-head"><span class="micro">ABLATIONS</span><span class="micro">same estate family</span></div>
+              <div id="evalAblations" class="ablations"></div>
+            </div>
+            <div class="card">
+              <div class="card-head"><span class="micro">HONESTY BOX</span><span class="micro">what this is not</span></div>
+              <ul class="honesty">
+                <li>The topology is synthetic; the algorithms are real.</li>
+                <li>“Predictive” means simulation-based forecasting with stated priors.</li>
+                <li>Labels are simulator-generated weak supervision, not breach history.</li>
+                <li>Memory lift is measured on held-out scripted incidents, not the open internet.</li>
+                <li>Dollar values are conditional ranges, not accounting figures.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="dock">
+    <div class="dock-head">
+      <span class="micro">MEMORY BUS / AUDIT</span>
+      <div class="dock-tags">
+        <span id="dockBackend">LOCAL</span>
+        <span id="dockLatency">— ms</span>
+        <span id="dockRecall">0 recalled</span>
+      </div>
+    </div>
+    <div class="console" id="consoleLog"></div>
+  </footer>
+</div>
+
+<div class="loading" id="loading">
+  <div class="loading-box">
+    <div class="loading-title">RUNNING OUTBREAK</div>
+    <div class="loading-steps" id="loadingSteps"></div>
+    <div class="loading-bar"><i></i></div>
+    <div class="loading-sub">Monte Carlo propagation · optimisation · grounded narration</div>
+  </div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <div class="modal-head"><span class="micro" id="modalTitle">EVIDENCE</span><button class="icon-btn" id="modalClose">✕</button></div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<div class="palette" id="palette">
+  <div class="palette-box">
+    <input id="paletteInput" placeholder="type a command… (run, memory, execute, reset, replay)">
+    <div class="palette-list" id="paletteList"></div>
+    <div class="palette-foot">↑↓ navigate · ↵ run · esc close</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module" src="/static/js/app.js"></script>
+</body>
+</html>
